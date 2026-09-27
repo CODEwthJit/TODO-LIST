@@ -1,6 +1,6 @@
 # Todo App Learning Project
 
-A guided full-stack learning project using React, JavaScript, Vite, Node.js, Express, PostgreSQL, and REST. Stages 0-10 are implemented. Automated checks use Node's built-in test runner.
+A guided full-stack learning project using React, JavaScript, Vite, Node.js, Express, PostgreSQL, and REST. Stages 0-12 are implemented. Automated checks use Node's built-in test runner.
 
 ## Architecture
 
@@ -190,8 +190,27 @@ git commit -m "Describe the change"
 git push -u origin feature/short-description
 ```
 
-On GitHub, open a pull request from the feature branch into `main`, review the diff, and merge after approval. Keep each branch focused on one change. Do not push `.env` or `.env.test`.
+On GitHub, open a pull request from the feature branch into `main`, review the diff, and merge after approval. Keep each branch focused on one change. Do not push `.env`, `.env.test`, or `.env.docker`.
 
+## Docker local stack
+
+Docker Compose runs PostgreSQL, the Express API, and the built React frontend in separate containers. The browser opens `http://localhost:5173`; it calls the API at `http://localhost:3000`, and the API reaches PostgreSQL using the Compose service name `database`.
+
+From PowerShell in the project folder, create a local Compose environment file and replace both example values. Use an alphanumeric database password because Compose places it in the connection URL:
+
+~~~powershell
+Copy-Item .env.docker.example .env.docker
+~~~
+
+Build the images, apply migrations to the Compose database, and start the stack:
+
+~~~powershell
+docker compose --env-file .env.docker build
+docker compose --env-file .env.docker run --rm api npm run migrate -- up
+docker compose --env-file .env.docker up -d
+~~~
+
+Open `http://localhost:5173`. Use `docker compose --env-file .env.docker logs -f api` to view API logs and `docker compose --env-file .env.docker down` to stop the services. The named PostgreSQL volume keeps database files when containers stop; docker compose down -v removes that volume and its data.
 ## Learning stages
 
 - **Stages 0-3:** Architecture, React UI, Express REST API, and frontend/backend connection.
@@ -203,6 +222,7 @@ On GitHub, open a pull request from the feature branch into `main`, review the d
 - **Stage 9:** Search, filtering, sorting, and pagination.
 - **Stage 10:** Node's built-in test runner checks query validation, frontend request construction/errors, and the authenticated API against a separate PostgreSQL test database.
 - **Stage 11:** Git ignore rules and documented local commit, branch, push, and pull request workflow.
-- **Next - Stage 12:** Docker.
+- **Stage 12:** Docker images and Compose services for the frontend, API, and PostgreSQL.
+- **Next - Stage 13:** Deployment.
 
 At each stage, the code is explained, a request is traced through the app, verification is performed, and a learning checkpoint is provided before continuing.
