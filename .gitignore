@@ -4,7 +4,7 @@ dist/
 .env.*
 !.env.example
 !.env.test.example
-.env.test
+!.env.docker.example
 coverage/
 *.log
 .DS_Store
