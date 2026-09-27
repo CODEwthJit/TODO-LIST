@@ -1,0 +1,31 @@
+{
+  "name": "todo-app-learning-project",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "node --env-file-if-exists=.env server/src/server.js",
+    "migrate": "node --env-file-if-exists=.env ./node_modules/node-pg-migrate/bin/node-pg-migrate.js",
+    "migrate:test": "node --env-file=.env.test ./node_modules/node-pg-migrate/bin/node-pg-migrate.js",
+    "test": "node --test tests/unit/todoSchemas.test.js tests/frontend/todoApi.test.js",
+    "test:integration": "node --env-file=.env.test --test tests/integration/todoApi.test.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-pg-simple": "^10.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "pg": "^8.16.3",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
+    "node-pg-migrate": "^9.0.0",
+    "vite": "^8.3.1"
+  }
+}
